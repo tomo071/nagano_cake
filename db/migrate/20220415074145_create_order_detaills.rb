@@ -6,8 +6,7 @@ class CreateOrderDetaills < ActiveRecord::Migration[6.1]
       t.integer:quantity
       t.integer:is_activ
 
-      t.datetime:created_at
-      t.datetime:updated_at
+    
     end
   end
 end
