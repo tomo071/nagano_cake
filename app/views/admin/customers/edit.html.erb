@@ -1,37 +1,51 @@
-<%= form_with model: @customer do |f| %>
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :first_name %>
-    <%= f.text_field :last_name %>
-  </div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <h2><%= @customer.full_name %>さんの会員情報編集</h2>
+        <div>
+          <label>会員ID</label>
+          <%= @customer.id %>
+        </div>
+      <%= form_with model: @customer, url: admin_customer_path(@customer.id) do |f| %>
+        <div class="field">
+          <%= f.label :name %>
+          <%= f.text_field :first_name %>
+          <%= f.text_field :last_name %>
+        </div>
 
-  <div class="field">
-    <%= f.label :name_kana %>
-    <%= f.text_field :first_name_kana %>
-    <%= f.text_field :last_name_kana %>
-  </div>
+        <div class="field">
+          <%= f.label :name_kana %>
+          <%= f.text_field :first_name_kana %>
+          <%= f.text_field :last_name_kana %>
+        </div>
 
-  <div class="field">
-    <%= f.label :postal_code %>
-    <%= f.text_field :postal_code %>
-  </div>
+        <div class="field">
+          <%= f.label :postal_code %>
+          <%= f.text_field :postal_code %>
+        </div>
 
-  <div class="field">
-    <%= f.label :address %>
-    <%= f.text_field :address %>
-  </div>
+        <div class="field">
+          <%= f.label :address %>
+          <%= f.text_field :address %>
+        </div>
 
-  <div class="field">
-    <%= f.label :telephone_number %>
-    <%= f.text_field :telephone_number %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-  </div>
+        <div class="field">
+          <%= f.label :telephone_number %>
+          <%= f.text_field :telephone_number %>
+        </div>
 
-  <div class="actions">
-    <%= f.submit "変更を保存" %>
-  </div>
-<% end %>
+        <div class="field">
+          <%= f.label :email %>
+          <%= f.email_field :email %>
+        </div>
+
+        <div class="field">
+          <label>会員ステータス</label>
+          <%= f.radio_button :is_deleted, false %><%= f.label :is_deleted, "有効" %>
+          <%= f.radio_button :is_deleted, true %><%= f.label :, "退会" %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "変更を保存" %>
+        </div>
+      <% end %>

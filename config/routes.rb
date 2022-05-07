@@ -9,42 +9,36 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
-    resources :orders, only: [:show]
-  end
-  namespace :admin do
-    resources :order_detaills, only: [:index, :edit, :update]
-  end
-  namespace :admin do
+    resources :orders, only: [:show, :update]
+    resources :order_details, only: [:index, :edit, :update]
     resources :items, only: [:new, :create, :index, :show, :edit, :update]
-  end
-  namespace :admin do
     resources :customers, only: [:index, :show, :edit, :update]
-  end
-  namespace :admin do
     resources :genres, only: [:index, :create, :edit, :update]
-  end
-  namespace :admin do
     get 'homes/top'
+
+
   end
+
   namespace :public do
+    delete 'cart_items/all_destroy'
     resources :items, only: [:index, :show]
+    resources :addresses, only: [:index, :create, :edit, :update, :destroy]
+    get 'orders/complete' => "orders#complete"
+    post 'orders/comfirm' => "orders#comfirm"
+    resources :orders, only: [:new, :create,  :complete, :index, :show]
+    resources :cart_items, only: [:index, :create, :update, :destroy]
+    get 'customers/unsubscribe'
+    patch '/customers/withdraw' => "customers#withdraw"
+    get '/customers/my_page' => "customers#show"
+    get '/customers/edit'=>"customers#edit"
+    patch '/customers'=>"customers#update"
+
   end
   scope module: :public do
     root to: 'homes#top'
     get 'homes/about'
   end
-   namespace :public do
-    resources :addresses, only: [:index, :create, :show, :update, :destroy]
-  end
-  namespace :public do
-    resources :orders, only: [:new, :create, :comfirm, :complete, :index, :show]
-  end
-  namespace :public do
-    resources :cart_items, only: [:index, :create, :update, :destroy]
-  end
-  namespace :public do
-    resources :customers, only: [:show, :edit, :unsubscribe]
-  end
+
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

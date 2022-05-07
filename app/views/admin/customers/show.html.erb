@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
-      <h2><%= @customer.name %>さんの会員詳細</h2>
+      <h2><%= @customer.first_name %><%= @customer.last_name %>さんの会員詳細</h2>
       <div>
         <div>
-          <h6>会員ID</h6>
+          <>会員ID</h6>
           <%= @customer.id %>
         </div>
         <div>
@@ -33,10 +33,14 @@
         </div>
         <div>
           <h6>会員ステータス</h6>
-          <%= @customer.is_active %>
+          <% if @customer.is_deleted %>
+          <td>退会</td>
+              <% else %>
+              <td>有効</td>
+              <% end %>
         </div>
       </div>
-      <%= link_to '編集する', edit_admin_item_path,class:"btn btn-secondary"%>
+      <%= link_to '編集する', edit_admin_customer_path,class:"btn btn-secondary"%>
       <%= link_to '注文履歴一覧を見る', admin_order_details_path(@customer.id),class:"btn btn-secondary"%>
     </div>
   </div>

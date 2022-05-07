@@ -7,24 +7,28 @@
       </div>
       <div>
         <div>
-          <h6>商品名</h6>
+          <h5>商品名</h5>
           <%= @item.name %>
         </div>
         <div>
-          <h6>商品説明</h6>
+          <h5>商品説明</h5>
           <%= @item.introduction %>
         </div>
         <div>
-          <h6>ジャンル</h6>
-          
+          <h5>ジャンル</h5>
+          <%= @item.genre.name  %>
         </div>
         <div>
-          <h6>税込価格</h6>
-          <%= @item.price %>
+          <h5>税込価格</h5>
+          <%= @item.price %>yen
         </div>
         <div>
-          <h6>販売ステータス</h6>
-          <%= @item.name %>
+          <h5>販売ステータス</h5>
+          <% if @item.is_activ %>
+              <td>販売中</td>
+              <% else %>
+              <td>販売停止中</td>
+              <% end %>
         </div>
       </div>
       <%= link_to '編集する', edit_admin_item_path,class:"btn btn-secondary"%>

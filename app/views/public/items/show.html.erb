@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
       <div>
         <h4>ジャンル検索</h4>
-        <% @items.gunre.each do |f| %>
+        <% @genre.each do |f| %>
         <p><%= f.name %></p>
         <% end %>
       </div>
@@ -14,12 +14,14 @@
           <div>
             <p><%= @item.introduction %></p>
             <p>￥<%= @item.price %></p>
-            <% form_with model: @cart_item do |f| %>
-            <%= f.hidden_field :item_id, :value=>@item.id  
+            <%= form_with model: @cart_item, url:public_cart_items_path do |f| %>
             <%= f.select :amount,  *[1..9] %>
+            <%= f.hidden_field :item_id, :value=>@item.id %>
+            <%= f.submit "カートに入れる", class:"btn btn-secondary"%>
+
+            <% end %>
           </div>
         </div>
-        <% end %>
       </div>
     </div>
   </div>

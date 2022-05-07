@@ -1,7 +1,6 @@
 <div class="container px-5 px-sm-0">
   <div class="row">
-    <div class="col-md-3">
-      <div class="col-md-8 offset-md-1">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
         <h2>会員一覧</h2>
         <table class="table">
           <thead>
@@ -15,10 +14,18 @@
           <% @customers.each do |user| %>
           <tbody>
             <tr>
-              <td><%= user.id %></td>
-              <td><%= user.name%></td>
+              <td>
+                <%= link_to admin_customer_path(user.id) do %>
+                <%= user.id %>
+                <% end %>
+              </td>
+              <td><%= user.first_name%><%= user.last_name%></td>
               <td><%= user.email %></td>
-              <td>ステータス。。。</td>
+              <% if user.is_deleted %>
+              <td>退会</td>
+              <% else %>
+              <td>有効</td>
+              <% end %>
             </tr>
           </tbody>
           <% end %>

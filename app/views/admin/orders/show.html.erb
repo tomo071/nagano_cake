@@ -1,2 +1,82 @@
-<h1>Admin::Orders#show</h1>
-<p>Find me in app/views/admin/orders/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+        <h2>注文履歴詳細</h2>
+          <div class="form-group">
+            <label>購入者</label>
+            <%= @order.customer.full_name %>
+          </div>
+          <div class="form-group">
+            <label>注文日</label>
+            <%= @order.created_at.strftime('%y/%m/%d')%>
+          </div>
+          <div class="form-group">
+            <label>配送先</label>
+            <%= @order.address_display%>
+          </div>
+          <div class="form-group">
+            <label>支払方法</label>
+            <% if @order.pay_method %>
+            クレジットカード
+            <% else %>
+            銀行振込
+            <% end %>
+          </div>
+          <div class="form-group">
+            <label>注文ステータス</label>
+            <%= form_with model: @order, url: admin_order_path do |f| %>
+            <%= f.select:is_activ, Order.is_activs.keys.map {|k| [I18n.t("enums.order.is_activ.#{k}"), k]} %>
+            <%= f.submit "更新", class:"btn btn-secondary" %>
+            <% end %>
+          </div>
+          <div class="row">
+            <div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>商品名</th>
+                    <th>単価</th>
+                    <th>数量</th>
+                    <th>小計</th>
+                    <th>製作ステータス</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <% @order_details.each do |t| %>
+                    <td><%= t.item.name %> </td>
+                    <td><%= t.price %></td>
+                    <td><%= t.quantity %></td>
+                    <td><%= t.subtotal %></td>
+                    <%= form_with model: t ,url: admin_order_detail_path do |f| %>
+                    <td>
+                    <%= f.select:is_activ, OrderDetail.is_activs.keys.map {|k| [I18n.t("enums.order_detail.is_activ.#{k}"), k]} %>
+                    <%= f.submit "更新", class:"btn btn-secondary" %>
+                    </td>
+                    <% @total += t.subtotal %>
+                    <% end %>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <div class="form-group">
+            <label>商品合計</label>
+            <%= @total %>
+          </div>
+          <div class="form-group">
+            <label>送料</label>
+            <%= @order.postage%>
+          </div>
+          <div class="form-group">
+            <label>請求金額</label>
+            <%= @total + @order.postage %>
+          </div>
+            </div>
+          </div>
+
+    </div>
+  </div>
+</div>

@@ -1,2 +1,73 @@
-<h1>Public::Orders#show</h1>
-<p>Find me in app/views/public/orders/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <h2>注文履歴詳細</h2>
+      <div>
+        <h4>注文情報</h4>
+        <div>
+          <div class="form-group">
+            <label>購入者:</label>
+            <%= @order.customer.full_name %>
+          </div>
+          <div class="form-group">
+            <label>注文日:</label>
+            <%= @order.created_at.strftime('%y/%m/%d')%>
+          </div>
+          <div class="form-group">
+            <label>配送先:</label>
+            <%= @order.address_display%>
+          </div>
+          <div class="form-group">
+            <label>支払方法:</label>
+            <% if @order.pay_method %>
+              クレジットカード
+            <% else %>
+              銀行振込
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h4>請求情報</h4>
+        <div>
+          <div class="form-group">
+            <label>商品合計(税込み）:　￥</label>
+            <%= @order.price - @order.postage %>
+          </div>
+          <div class="form-group">
+            <label>配送料:　￥</label>
+            <%= @order.postage%>
+          </div>
+          <div class="form-group">
+            <label>請求額:　￥</label>
+            <%= @order.price %>
+        </div>
+      </div>
+      <div>
+        <h4>注文内容</h4>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>商品</th>
+                <th>単価</th>
+                <th>個数</th>
+                <th>小計</th>
+              </tr>
+            </thead>
+            <% @order_details.each do |t| %>
+            <tbody>
+              <tr>
+                <td><%= t.item.name %> </td>
+                <td><%= t.item.price %></td>
+                <td><%= t.quantity %></td>
+                <td><%= t.item.price * t.quantity %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,15 +1,32 @@
-<div>
-  <div>
-    <div>
-      <h3>ジャンル</h3>
-      <table>
-
-      </table>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
       <div>
-        <h2>新着商品</h2>
+        <h4>ジャンル検索</h4>
+        <% @genres.each do |t| %>
+        <p><%= link_to t.name, public_items_path(genre_id: t.id) %></p>
+        <% end %>
       </div>
-      <%= link_to "新規登録", new_customer_registration_path %>
-      
+      <div>
+        <% if @items.count==Item.count %>
+        <h2>商品一覧</h2>
+        <% else %>
+        <h2><%= @genre.name %>一覧</h2>
+        <% end %>
+        <% @items.each do |item| %>
+        <div>
+          <%= link_to public_item_path(item.id) do %>
+          <%= image_tag item.get_item_image %>
+          <% end %>
+          <div>
+            <p><%= item.name %></p>
+            <p>￥<%= item.price %></p>
+          </div>
+        </div>
+        <% end %>
+
+
+      </div>
     </div>
   </div>
 </div>
